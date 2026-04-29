@@ -45,7 +45,7 @@ module "eks" {
 
   access_entries = {
     github_actions = {
-      principal_arn = "arn:aws:iam::861142265676:role/github-actions-role"
+      principal_arn = "arn:aws:iam::${data.aws_caller_identity.current}:role/github-actions-role"
 
       policy_associations = {
         admin_policy = {

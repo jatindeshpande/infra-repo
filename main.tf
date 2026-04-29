@@ -10,6 +10,12 @@ data "aws_subnets" "default" {
   }
 }
 
+data "aws_caller_identity" "current"{}
+
+output "debug_identity" {
+  value = data.aws_caller_identity.current.arn
+}
+
 output "aws_subnet" {
   description = "Output the subnet id"
   value = data.aws_subnets.default.ids

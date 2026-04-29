@@ -1,3 +1,6 @@
+data "tls_certificate" "github" {
+  url = "https://token.actions.githubusercontent.com"
+}
 resource "aws_iam_openid_connect_provider" "github" {
   url = "https://token.actions.githubusercontent.com"
 
@@ -5,8 +8,12 @@ resource "aws_iam_openid_connect_provider" "github" {
     "sts.amazonaws.com"
   ]
 
+  # certificates is ordered leaf → intermediate → root
+  # last element = root CA = what AWS actually needs
   thumbprint_list = [
-    "7560d6f40fa55195f740ee2b1b7c0b4836cbe103"
+    data.tls_certificate.github.certificates[
+      length(data.tls_certificate.github.certificates) - 1
+    ].sha1_fingerprint
   ]
 }
 
