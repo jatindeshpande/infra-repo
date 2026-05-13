@@ -34,3 +34,11 @@ resource "aws_ecr_repository" "app_repo" {
   }
   force_delete = true
 }
+
+resource "aws_ecr_repository" "app_repo1" {
+  name = "frontend-app"
+  image_scanning_configuration {
+    scan_on_push = true
+  }
+  force_delete = true
+}
